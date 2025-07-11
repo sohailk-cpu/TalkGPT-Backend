@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TalkGPT</title>
+</head>
+<body style="text-align:center; font-family:sans-serif;">
+  <h1>TalkGPT 🔊</h1>
+  <button onclick="startListening()">🎤 Start Speaking</button>
+  <p><b>You:</b> <span id="userText">...</span></p>
+  <p><b>TalkGPT:</b> <span id="botReply">...</span></p>
+
+  <script>
+    function startListening() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = "en-IN";
+      recognition.start();
+
+      recognition.onresult = (event) => {
+        const text = event.results[0][0].transcript;
+        document.getElementById("userText").innerText = text;
+        fetch("/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: text })
+        })
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("botReply").innerText = data.reply;
+          speak(data.reply);
+        });
+      };
+    }
+
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-IN";
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+</html>

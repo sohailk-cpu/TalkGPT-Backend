@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TalkGPT - Chat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>TalkGPT</h1>
+  <p style="color:#ccc;">Type something like: "aaj kaun sa din hai"</p>
+
+  <div class="chat-area">
+    <div class="chat-response" id="chat-response">Hello! How can I assist you?</div>
+    <input type="text" id="chat-input" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+
+  <a href="/voice"><button style="margin-top:20px;">🎙️ Switch to Voice Mode</button></a>
+  <a href="/login">🔐 Login</a> | <a href="/signup">Sign Up</a> | <a href="/history">History</a>
+
+<!-- ✅ JS for chat sending -->
+ <script>
+  function sendMessage() {
+    const inputBox = document.getElementById("chat-input");
+    const msg = inputBox.value.trim();
+
+    if (!msg) return;
+
+    const responseBox = document.getElementById("chat-response");
+    responseBox.innerText = "Thinking...";
+
+    inputBox.value = "";  // ✅ Input clear kar diya yahan
+
+    fetch("/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: msg })
+    })
+    .then(res => res.json())
+    .then(data => {
+      responseBox.innerText = data.response;
+    })
+    .catch(err => {
+      responseBox.innerText = "❌ Error reaching AI.";
+    });
+  }
+</script>
+</body>
+</html>

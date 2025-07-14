@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat History - TalkGPT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h2>Chat History</h2>
+  {% if history %}
+    <div style="text-align:left; max-width:600px; margin:auto;">
+      {% for msg in history %}
+        <p><strong>{{ msg.role }}:</strong> {{ msg.content }}</p>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No history found.</p>
+  {% endif %}
+  <br>
+  <a href="/">← Back to Chat</a>
+</body>
+</html>

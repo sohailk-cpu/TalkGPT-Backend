@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TalkGPT Voice Mode</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>🎤 TalkGPT - Voice Assistant</h1>
+<p>Tap the mic and speak...</p>
+
+<div class="mic-wrapper">
+  <img src="/static/mic.svg" class="mic-icon" onclick="startVoiceChat()" />
+</div>
+
+ <div class="chat-response" id="responseBox">AI response will appear here...</div>
+<p id="voice-response">Your AI response will appear here...</p>
+
+<audio id="audio" autoplay></audio>
+
+<a href="/">
+  <button>Switch to Chat Mode</button>
+</a>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
